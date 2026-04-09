@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Procrastination Simulator X</title>
+
+<style>
+body {
+  font-family: Arial;
+  text-align: center;
+  background: #0d0d0d;
+  color: white;
+  padding: 30px;
+  transition: 0.4s;
+}
+
+button {
+  padding: 12px 20px;
+  margin: 8px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.start { background: red; color: white; }
+.panic { background: green; color: white; }
+.ai { background: purple; color: white; }
+
+#bar {
+  width: 0%;
+  height: 20px;
+  background: lime;
+}
+
+#progress {
+  width: 80%;
+  margin: auto;
+  background: #333;
+  display: none;
+}
+
+#text { margin-top: 10px; }
+
+#popup, #virus, #teapot {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  color: black;
+  padding: 20px;
+  display: none;
+  z-index: 999;
+}
+
+#virus {
+  background: black;
+  color: red;
+  font-size: 22px;
+}
+
+.fake-work { display: none; }
+.work-mode .fake-work { display: block; }
+
+</style>
+</head>
+
+<body>
+
+<h1>🤡 Procrastination Simulator X</h1>
+
+<button class="start" onclick="start()">Start Working</button>
+<button class="panic" onclick="panic()">🚨 Boss Mode</button>
+<button class="ai" onclick="fakeAI()">🤖 Ask AI</button>
+<button onclick="virusMode()">💀 Virus Mode</button>
+<button onclick="teapot()">☕ 418 Mode</button>
+
+<div id="progress"><div id="bar"></div></div>
+<div id="text"></div>
+
+<div id="popup">
+<h3>Error 418</h3>
+<p>I’m a teapot ☕</p>
+<button onclick="closePopup()">Close</button>
+</div>
+
+<div id="virus">
+⚠ SYSTEM HACKED ⚠<br>
+Deleting files in <span id="count">10</span>...
+</div>
+
+<div id="teapot">
+<h2>418 - I'm a Teapot ☕</h2>
+<p>This app refuses to brew productivity.</p>
+</div>
+
+<div class="fake-work">
+📊 Dashboard: Profit +9999% <br>
+📈 Graph loading... <br>
+🧠 AI says: "Looks productive"
+</div>
+
+<script>
+let progress = 0;
+
+function start() {
+  document.getElementById("progress").style.display = "block";
+
+  setInterval(() => {
+    progress += Math.random() * 10;
+
+    if (progress > 100) {
+      progress = 99;
+      if (Math.random() < 0.3) showPopup();
+    }
+
+    document.getElementById("bar").style.width = progress + "%";
+    document.getElementById("text").innerText = "Almost done...";
+  }, 500);
+}
+
+function panic() {
+  document.body.classList.toggle("work-mode");
+}
+
+function fakeAI() {
+  const responses = [
+    "Try turning your brain off and on again.",
+    "Work smarter by avoiding work.",
+    "You are 100% productive in imagination.",
+    "Error: Motivation not found."
+  ];
+  alert(responses[Math.floor(Math.random()*responses.length)]);
+}
+
+function showPopup() {
+  document.getElementById("popup").style.display = "block";
+}
+
+function closePopup() {
+  document.getElementById("popup").style.display = "none";
+}
+
+function virusMode() {
+  let count = 10;
+  let v = document.getElementById("virus");
+  v.style.display = "block";
+
+  let interval = setInterval(() => {
+    count--;
+    document.getElementById("count").innerText = count;
+
+    if (count <= 0) {
+      clearInterval(interval);
+      v.innerHTML = "😂 Just kidding!";
+    }
+  }, 1000);
+}
+
+function teapot() {
+  document.getElementById("teapot").style.display = "block";
+}
+
+// Fake boss detection trigger
+setInterval(() => {
+  if (Math.random() < 0.1) {
+    panic();
+  }
+}, 5000);
+
+</script>
+
+</body>
+</html>
